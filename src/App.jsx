@@ -8,9 +8,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import { useDispatch } from "react-redux";
-import { add, remove } from "./features/todoSlice";
+import { add, remove, toggleCompleted } from "./features/todoSlice";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -29,6 +30,10 @@ function App() {
     dispatch(remove(id));
   }
 
+  function handleCheckbox(id) {
+    dispatch(toggleCompleted(id));
+  }
+
   return (
     <>
       <CssBaseline />
@@ -44,7 +49,9 @@ function App() {
             {todos &&
               todos.map((todo) => (
                 <ListItem sx={{ backgroundColor: "lightblue", padding: "10px 50px", margin: "10px", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} key={todo.id}>
-                  <Checkbox />
+                  <FormControlLabel 
+                  control={<Checkbox onChange={() => handleCheckbox(todo.id)} />} 
+                  label={todo.completed ? "Not Completed" : "Completed"} />
                   <ListItemText primary={todo.title} />
                   <Button sx={{ color: "red", fontSize: "24px" }} onClick={() => handleDelete(todo.id)}>
                     x

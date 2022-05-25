@@ -20,8 +20,12 @@ const todoSlice = createSlice({
       const updatedList = state.todos.filter((todo) => todo.id !== action.payload);
       state.todos = updatedList;
     },
+    toggleCompleted: (state, action) => {
+      const updatedList = state.todos.map((todo) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo));
+      state.todos = updatedList;
+    },
   },
 });
 
-export const { add, remove } = todoSlice.actions;
+export const { add, remove, toggleCompleted } = todoSlice.actions;
 export default todoSlice.reducer;
